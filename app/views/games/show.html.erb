@@ -8,18 +8,11 @@
 
 <h4>How it works</h4>
 
-<ol>
-  <li>Input some value into the "Bet Input"</li>
-  <li>Input a bet amount</li>
-  <li>Click "Place bet"</li>
-</ol>
-
 <h4>Determining a winner</h4>
 <p>
-  Your input text is SHA'd using a server secret. <br />
+  Your game selection input is SHA'd using a server secret. <br />
   The first 4 hex bytes are converted to an integer to create your "Lucky Number". <br />
-  A random roll is made between 0 - 65, 535. <br />
-  If your "Lucky Number" is less than the roll, you win!
+  If your "Lucky Number" is less than the game max amount, you win!
 </p>
 <br />
 
@@ -30,21 +23,36 @@
 <% end %>
 
 <%= form_tag [:bet, :games], role: 'form', class: 'form-horizontal' do %>
-  <div class="form-group">
-    <label for="exampleInputEmail1" class="col-sm-2">Bet Input:</label>
-    <div class='col-sm-10'>
-      <%= text_field_tag :bet_input, nil, class: 'form-control', placeholder: 'Bet Input', required: true %>
-    </div>
-  </div>
+  <h3>Step 1 <small>Select a game to play</small></h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Win If</th>
+        <th>Payout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @games.each do |game| %>
+        <tr>
+          <td><%= radio_button_tag :game_input, game[:input] %></td>
+          <td>Less than <%= game[:max] %></td>
+          <td><%= game[:prize] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
+  <h3>Step 2 <small>Input a bet amount</small></h3>
   <div class="form-group">
-    <label for="exampleInputEmail1" class="col-sm-2">Bet:</label>
     <div class='col-sm-3'>
       <%= text_field_tag :amount, nil, class: 'form-control', placeholder: 'Bet amount', required: true %>
     </div>
   </div>
+
+  <h3>Step 3 <small>Click "Place bet"</small></h3>
   <div class="form-group">
-    <div class='col-sm-offset-2 col-sm-3'>
+    <div class='col-sm-3'>
       <%= submit_tag "Place bet", class: 'btn btn-success' %>
     </div>
   </div>
@@ -59,8 +67,8 @@
         <td><%= @bet %></td>
       </tr>
       <tr>
-        <td>Input Text</td>
-        <td><%= params[:bet_input] %></td>
+        <td>Game Key</td>
+        <td><%= @game[:input] %></td>
       </tr>
       <tr>
         <td>Salt</td>
@@ -75,8 +83,8 @@
         <td><%= @result_int %></td>
       </tr>
       <tr>
-        <td>Roll</td>
-        <td><%= @roll %></td>
+        <td>Max</td>
+        <td><%= @game[:max] %></td>
       </tr>
       <tr>
         <td>Result</td>
