@@ -1,0 +1,17 @@
+<h1>Welcome Player</h1>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    Your balance: <%= @player.balance %>
+  </div>
+</div>
+
+<h4>How it works</h4>
+
+<h4>Determining a winner</h4>
+<p>
+  Your game selection input is SHA'd using a server secret. <br />
+  The first 4 hex bytes are converted to an integer to create your "Lucky Number". <br />
+  If your "Lucky Number" is less than the game max amount, you win!
+</p>
+<br />

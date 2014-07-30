@@ -1,0 +1,35 @@
+<%= form_tag [:bet, :games], role: 'form', class: 'form-horizontal' do %>
+  <h3>Step 1 <small>Select a game to play</small></h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Win If</th>
+        <th>Payout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @games.each do |game| %>
+        <tr>
+          <td><%= radio_button_tag :game_input, game[:input], game[:input] == params[:game_input] %></td>
+          <td>Less than <%= game[:max] %></td>
+          <td><%= game[:prize] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h3>Step 2 <small>Input a bet amount</small></h3>
+  <div class="form-group">
+    <div class='col-sm-3'>
+      <%= text_field_tag :amount, params[:amount], class: 'form-control', placeholder: 'Bet amount', required: true %>
+    </div>
+  </div>
+
+  <h3>Step 3 <small>Click "Place bet"</small></h3>
+  <div class="form-group">
+    <div class='col-sm-3'>
+      <%= submit_tag "Place bet", class: 'btn btn-success' %>
+    </div>
+  </div>
+<% end %>

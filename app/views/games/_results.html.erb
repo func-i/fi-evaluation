@@ -1,0 +1,34 @@
+<% if @bet.game.message %>
+  <table class='table'>
+    <tbody>
+      <tr>
+        <td>Bet</td>
+        <td><%= @bet.amount %></td>
+      </tr>
+      <tr>
+        <td>Game Key</td>
+        <td><%= @bet.game.input %></td>
+      </tr>
+      <tr>
+        <td>Salt</td>
+        <td><%= @bet.game.secret %></td>
+      </tr>
+      <tr>
+        <td>Hex</td>
+        <td><%= @bet.game.result_hex %></td>
+      </tr>
+      <tr>
+        <td>Lucky Number</td>
+        <td><%= @bet.game.result_int %></td>
+      </tr>
+      <tr>
+        <td>Max</td>
+        <td><%= @bet.game.max %></td>
+      </tr>
+      <tr>
+        <td>Result</td>
+        <td><%= @bet.game.message %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
